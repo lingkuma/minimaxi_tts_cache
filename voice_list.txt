@@ -1,0 +1,560 @@
+Minimaxi TTS List
+count 279
+
+uniq_id": "Chinese (Mandarin)_Reliable_Executive",
+
+uniq_id": "Chinese (Mandarin)_News_Anchor",
+
+uniq_id": "Chinese (Mandarin)_Refreshing_Young_Man",
+
+uniq_id": "Chinese (Mandarin)_Mature_Woman",
+
+uniq_id": "Chinese (Mandarin)_Unrestrained_Young_Man",
+
+uniq_id": "Arrogant_Miss",
+
+uniq_id": "Robot_Armor",
+
+uniq_id": "Chinese (Mandarin)_Kind-hearted_Antie",
+
+uniq_id": "Chinese (Mandarin)_HK_Flight_Attendant",
+
+uniq_id": "Chinese (Mandarin)_Humorous_Elder",
+
+uniq_id": "Chinese (Mandarin)_Gentleman",
+
+uniq_id": "Chinese (Mandarin)_Warm_Bestie",
+
+uniq_id": "Chinese (Mandarin)_Male_Announcer",
+
+uniq_id": "Chinese (Mandarin)_Sweet_Lady",
+
+uniq_id": "Chinese (Mandarin)_Southern_Young_Man",
+
+uniq_id": "Chinese (Mandarin)_Wise_Women",
+
+uniq_id": "Chinese (Mandarin)_Gentle_Youth",
+
+uniq_id": "Chinese (Mandarin)_Warm_Girl",
+
+uniq_id": "Chinese (Mandarin)_Kind-hearted_Elder",
+
+uniq_id": "Chinese (Mandarin)_Cute_Spirit",
+
+uniq_id": "Chinese (Mandarin)_Radio_Host",
+
+uniq_id": "Chinese (Mandarin)_Lyrical_Voice",
+
+uniq_id": "Chinese (Mandarin)_Straightforward_Boy",
+
+uniq_id": "Chinese (Mandarin)_Sincere_Adult",
+
+uniq_id": "Chinese (Mandarin)_Gentle_Senior",
+
+uniq_id": "Chinese (Mandarin)_Stubborn_Friend",
+
+uniq_id": "Chinese (Mandarin)_Crisp_Girl",
+
+uniq_id": "Chinese (Mandarin)_Pure-hearted_Boy",
+
+uniq_id": "Chinese (Mandarin)_Soft_Girl",
+
+uniq_id": "Arabic_CalmWoman",
+
+uniq_id": "Arabic_FriendlyGuy",
+
+uniq_id": "Cantonese_ProfessionalHost（F)",
+
+uniq_id": "Cantonese_GentleLady",
+
+uniq_id": "Cantonese_ProfessionalHost（M)",
+
+uniq_id": "Cantonese_PlayfulMan",
+
+uniq_id": "Cantonese_CuteGirl",
+
+uniq_id": "Cantonese_KindWoman",
+
+uniq_id": "Dutch_kindhearted_girl",
+
+uniq_id": "Dutch_bossy_leader",
+
+uniq_id": "French_Female Journalist",
+
+uniq_id": "English_Trustworthy_Man",
+
+uniq_id": "French_Female_Speech_New",
+
+uniq_id": "English_Graceful_Lady",
+
+uniq_id": "English_Aussie_Bloke",
+
+uniq_id": "English_Whispering_girl",
+
+uniq_id": "English_Diligent_Man",
+
+uniq_id": "English_Gentle-voiced_man",
+
+uniq_id": "French_Male_Speech_New",
+
+uniq_id": "French_Female_News Anchor",
+
+uniq_id": "French_CasualMan",
+
+uniq_id": "French_MovieLeadFemale",
+
+uniq_id": "French_FemaleAnchor",
+
+uniq_id": "French_MaleNarrator",
+
+uniq_id": "German_FriendlyMan",
+
+uniq_id": "German_SweetLady",
+
+uniq_id": "German_PlayfulMan",
+
+uniq_id": "Indonesian_SweetGirl",
+
+uniq_id": "Indonesian_ReservedYoungMan",
+
+uniq_id": "Indonesian_CharmingGirl",
+
+uniq_id": "Indonesian_CalmWoman",
+
+uniq_id": "Italian_ReliableMan",
+
+uniq_id": "Indonesian_ConfidentWoman",
+
+uniq_id": "Italian_AthleticStudent",
+
+uniq_id": "Indonesian_CaringMan",
+
+uniq_id": "Italian_ArrogantPrincess",
+
+uniq_id": "Indonesian_BossyLeader",
+
+uniq_id": "Indonesian_DeterminedBoy",
+
+uniq_id": "Indonesian_GentleGirl",
+
+uniq_id": "Italian_BraveHeroine",
+
+uniq_id": "Italian_Narrator",
+
+uniq_id": "Italian_WanderingSorcerer",
+
+uniq_id": "Italian_DiligentLeader",
+
+uniq_id": "Japanese_IntellectualSenior",
+
+uniq_id": "Japanese_DecisivePrincess",
+
+uniq_id": "Japanese_LoyalKnight",
+
+uniq_id": "Japanese_DominantMan",
+
+uniq_id": "Japanese_SeriousCommander",
+
+uniq_id": "Japanese_ColdQueen",
+
+uniq_id": "Japanese_DependableWoman",
+
+uniq_id": "Japanese_GentleButler",
+
+uniq_id": "Japanese_KindLady",
+
+uniq_id": "Japanese_CalmLady",
+
+uniq_id": "Japanese_OptimisticYouth",
+
+uniq_id": "Japanese_GenerousIzakayaOwner",
+
+uniq_id": "Japanese_SportyStudent",
+
+uniq_id": "Japanese_InnocentBoy",
+
+uniq_id": "Japanese_GracefulMaiden",
+
+uniq_id": "Korean_PowerfulGirl",
+
+uniq_id": "Korean_BossyMan",
+
+uniq_id": "Korean_SweetGirl",
+
+uniq_id": "Korean_CheerfulBoyfriend",
+
+uniq_id": "Portuguese_AnxiousMan",
+
+uniq_id": "Korean_EnchantingSister",
+
+uniq_id": "Korean_ShyGirl",
+
+uniq_id": "Korean_ReliableSister",
+
+uniq_id": "Korean_StrictBoss",
+
+uniq_id": "Korean_SassyGirl",
+
+uniq_id": "Korean_ChildhoodFriendGirl",
+
+uniq_id": "Korean_PlayboyCharmer",
+
+uniq_id": "Korean_ElegantPrincess",
+
+uniq_id": "Portuguese_Matureresearcher",
+
+uniq_id": "Korean_BraveFemaleWarrior",
+
+uniq_id": "Korean_BraveYouth",
+
+uniq_id": "Korean_CalmLady",
+
+uniq_id": "Portuguese_Optimisticyouth",
+
+uniq_id": "Korean_EnthusiasticTeen",
+
+uniq_id": "Korean_SoothingLady",
+
+uniq_id": "Korean_IntellectualSenior",
+
+uniq_id": "Korean_LonelyWarrior",
+
+uniq_id": "Korean_MatureLady",
+
+uniq_id": "Korean_InnocentBoy",
+
+uniq_id": "Korean_CharmingSister",
+
+uniq_id": "Korean_AthleticStudent",
+
+uniq_id": "Korean_BraveAdventurer",
+
+uniq_id": "Portuguese_CuteElf",
+
+uniq_id": "Korean_CalmGentleman",
+
+uniq_id": "Korean_WiseElf",
+
+uniq_id": "Korean_CheerfulCoolJunior",
+
+uniq_id": "Korean_DecisiveQueen",
+
+uniq_id": "Korean_ColdYoungMan",
+
+uniq_id": "Korean_MysteriousGirl",
+
+uniq_id": "Korean_QuirkyGirl",
+
+uniq_id": "Korean_ConsiderateSenior",
+
+uniq_id": "Korean_CheerfulLittleSister",
+
+uniq_id": "Korean_DominantMan",
+
+uniq_id": "Korean_AirheadedGirl",
+
+uniq_id": "Korean_ReliableYouth",
+
+uniq_id": "Korean_FriendlyBigSister",
+
+uniq_id": "Korean_GentleBoss",
+
+uniq_id": "Korean_ColdGirl",
+
+uniq_id": "Korean_HaughtyLady",
+
+uniq_id": "Korean_CharmingElderSister",
+
+uniq_id": "Korean_IntellectualMan",
+
+uniq_id": "Korean_CaringWoman",
+
+uniq_id": "Korean_WiseTeacher",
+
+uniq_id": "Korean_ConfidentBoss",
+
+uniq_id": "Korean_AthleticGirl",
+
+uniq_id": "Korean_PossessiveMan",
+
+uniq_id": "Korean_GentleWoman",
+
+uniq_id": "Korean_CockyGuy",
+
+uniq_id": "Korean_ThoughtfulWoman",
+
+uniq_id": "Korean_OptimisticYouth",
+
+uniq_id": "Portuguese_EnergeticGirl",
+
+uniq_id": "Portuguese_FunnyGuy",
+
+uniq_id": "Portuguese_Nuttylady",
+
+uniq_id": "Portuguese_Deep-tonedMan",
+
+uniq_id": "Portuguese_SentimentalLady",
+
+uniq_id": "Portuguese_BossyLeader",
+
+uniq_id": "Portuguese_Wiselady",
+
+uniq_id": "Portuguese_Strong-WilledBoy",
+
+uniq_id": "Portuguese_Deep-VoicedGentleman",
+
+uniq_id": "Portuguese_UpsetGirl",
+
+uniq_id": "Portuguese_PassionateWarrior",
+
+uniq_id": "Portuguese_AnimeCharacter",
+
+uniq_id": "Portuguese_ConfidentWoman",
+
+uniq_id": "Portuguese_AngryMan",
+
+uniq_id": "Portuguese_CaptivatingStoryteller",
+
+uniq_id": "Portuguese_Godfather",
+
+uniq_id": "Portuguese_ReservedYoungMan",
+
+uniq_id": "Portuguese_SmartYoungGirl",
+
+uniq_id": "Portuguese_Kind-heartedGirl",
+
+uniq_id": "Portuguese_Pompouslady",
+
+uniq_id": "Portuguese_Grinch",
+
+uniq_id": "Portuguese_Debator",
+
+uniq_id": "Portuguese_SweetGirl",
+
+uniq_id": "Portuguese_AttractiveGirl",
+
+uniq_id": "Portuguese_ThoughtfulMan",
+
+uniq_id": "Portuguese_PlayfulGirl",
+
+uniq_id": "Portuguese_GorgeousLady",
+
+uniq_id": "Portuguese_LovelyLady",
+
+uniq_id": "Portuguese_SereneWoman",
+
+uniq_id": "Portuguese_SadTeen",
+
+uniq_id": "Portuguese_MaturePartner",
+
+uniq_id": "Portuguese_Comedian",
+
+uniq_id": "Portuguese_NaughtySchoolgirl",
+
+uniq_id": "Portuguese_Narrator",
+
+uniq_id": "Portuguese_ToughBoss",
+
+uniq_id": "Portuguese_Fussyhostess",
+
+uniq_id": "Portuguese_Dramatist",
+
+uniq_id": "Portuguese_Steadymentor",
+
+uniq_id": "Portuguese_Jovialman",
+
+uniq_id": "Portuguese_CharmingQueen",
+
+uniq_id": "Portuguese_SantaClaus",
+
+uniq_id": "Portuguese_Rudolph",
+
+uniq_id": "Portuguese_Arnold",
+
+uniq_id": "Portuguese_CharmingSanta",
+
+uniq_id": "Portuguese_CharmingLady",
+
+uniq_id": "Portuguese_Ghost",
+
+uniq_id": "Portuguese_HumorousElder",
+
+uniq_id": "Portuguese_CalmLeader",
+
+uniq_id": "Portuguese_GentleTeacher",
+
+uniq_id": "Portuguese_EnergeticBoy",
+
+uniq_id": "Portuguese_ReliableMan",
+
+uniq_id": "Portuguese_SereneElder",
+
+uniq_id": "Portuguese_GrimReaper",
+
+uniq_id": "Portuguese_AssertiveQueen",
+
+uniq_id": "Portuguese_WhimsicalGirl",
+
+uniq_id": "Portuguese_StressedLady",
+
+uniq_id": "Portuguese_FriendlyNeighbor",
+
+uniq_id": "Portuguese_CaringGirlfriend",
+
+uniq_id": "Portuguese_PowerfulSoldier",
+
+uniq_id": "Portuguese_FascinatingBoy",
+
+uniq_id": "Portuguese_RomanticHusband",
+
+uniq_id": "Portuguese_StrictBoss",
+
+uniq_id": "Portuguese_InspiringLady",
+
+uniq_id": "Portuguese_PlayfulSpirit",
+
+uniq_id": "Portuguese_ElegantGirl",
+
+uniq_id": "Portuguese_CompellingGirl",
+
+uniq_id": "Portuguese_PowerfulVeteran",
+
+uniq_id": "Portuguese_SensibleManager",
+
+uniq_id": "Portuguese_ThoughtfulLady",
+
+uniq_id": "Portuguese_TheatricalActor",
+
+uniq_id": "Portuguese_FragileBoy",
+
+uniq_id": "Portuguese_ChattyGirl",
+
+uniq_id": "Portuguese_Conscientiousinstructor",
+
+uniq_id": "Portuguese_RationalMan",
+
+uniq_id": "Portuguese_WiseScholar",
+
+uniq_id": "Portuguese_FrankLady",
+
+uniq_id": "Portuguese_DeterminedManager",
+
+uniq_id": "Russian_HandsomeChildhoodFriend",
+
+uniq_id": "Russian_BrightHeroine",
+
+uniq_id": "Russian_AmbitiousWoman",
+
+uniq_id": "Russian_ReliableMan",
+
+uniq_id": "Russian_CrazyQueen",
+
+uniq_id": "Russian_PessimisticGirl",
+
+uniq_id": "Russian_AttractiveGuy",
+
+uniq_id": "Russian_Bad-temperedBoy",
+
+uniq_id": "Spanish_SereneWoman",
+
+uniq_id": "Spanish_MaturePartner",
+
+uniq_id": "Spanish_CaptivatingStoryteller",
+
+uniq_id": "Spanish_Narrator",
+
+uniq_id": "Spanish_WiseScholar",
+
+uniq_id": "Spanish_Kind-heartedGirl",
+
+uniq_id": "Spanish_DeterminedManager",
+
+uniq_id": "Spanish_BossyLeader",
+
+uniq_id": "Spanish_ReservedYoungMan",
+
+uniq_id": "Spanish_ConfidentWoman",
+
+uniq_id": "Spanish_ThoughtfulMan",
+
+uniq_id": "Spanish_Strong-WilledBoy",
+
+uniq_id": "Spanish_SophisticatedLady",
+
+uniq_id": "Spanish_RationalMan",
+
+uniq_id": "Spanish_AnimeCharacter",
+
+uniq_id": "Spanish_Deep-tonedMan",
+
+uniq_id": "Spanish_Fussyhostess",
+
+uniq_id": "Spanish_SincereTeen",
+
+uniq_id": "Spanish_FrankLady",
+
+uniq_id": "Spanish_Comedian",
+
+uniq_id": "Spanish_Debator",
+
+uniq_id": "Spanish_ToughBoss",
+
+uniq_id": "Spanish_Wiselady",
+
+uniq_id": "Spanish_Steadymentor",
+
+uniq_id": "Spanish_Jovialman",
+
+uniq_id": "Spanish_SantaClaus",
+
+uniq_id": "Spanish_Rudolph",
+
+uniq_id": "Spanish_Intonategirl",
+
+uniq_id": "Spanish_Arnold",
+
+uniq_id": "Spanish_Ghost",
+
+uniq_id": "Spanish_HumorousElder",
+
+uniq_id": "Spanish_EnergeticBoy",
+
+uniq_id": "Spanish_WhimsicalGirl",
+
+uniq_id": "Spanish_StrictBoss",
+
+uniq_id": "Spanish_ReliableMan",
+
+uniq_id": "Spanish_SereneElder",
+
+uniq_id": "Spanish_AngryMan",
+
+uniq_id": "Spanish_AssertiveQueen",
+
+uniq_id": "Spanish_CaringGirlfriend",
+
+uniq_id": "Spanish_PowerfulSoldier",
+
+uniq_id": "Spanish_PassionateWarrior",
+
+uniq_id": "Spanish_ChattyGirl",
+
+uniq_id": "Spanish_RomanticHusband",
+
+uniq_id": "Spanish_CompellingGirl",
+
+uniq_id": "Spanish_PowerfulVeteran",
+
+uniq_id": "Spanish_SensibleManager",
+
+uniq_id": "Spanish_ThoughtfulLady",
+
+uniq_id": "Turkish_CalmWoman",
+
+uniq_id": "Turkish_Trustworthyman",
+
+uniq_id": "Ukrainian_CalmWoman",
+
+uniq_id": "Ukrainian_WiseScholar",
+
+uniq_id": "Vietnamese_kindhearted_girl",
