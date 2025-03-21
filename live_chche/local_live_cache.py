@@ -52,8 +52,16 @@ def build_tts_stream_body(text: str, language: str = "German", voice_id: str = "
     if text and not text.endswith(('.', '!', '?', ';', '。', '！', '？')):
         text = text + "."
  
+    # 将单词里的小写i全部换成大写I
+    # 将单词里的小写i全部换成大写I
+    
+    text = text.replace("ni", "nI")
+    text = text.replace("Gy", "GY")
     # 可以根据需要添加更多语言的voice_id映射
     
+    #打印text
+    print(text)
+
     body = json.dumps({
         "model": "speech-01-turbo",
         "text": text,
@@ -76,13 +84,27 @@ def build_tts_stream_body(text: str, language: str = "German", voice_id: str = "
     return body
 
 
-mpv_command = ["mpv", "--no-cache", "--no-terminal", "--", "fd://0"]
-mpv_process = subprocess.Popen(
-    mpv_command,
-    stdin=subprocess.PIPE,
-    stdout=subprocess.DEVNULL,
-    stderr=subprocess.DEVNULL,
-)
+# 全局mpv进程，延迟启动并保持常开
+
+mpv_process = None
+
+def ensure_mpv_process():
+    """确保MPV进程已启动"""
+    global mpv_process
+    if mpv_process is None or mpv_process.poll() is not None:
+        mpv_command = ["mpv", "--no-cache", "--no-terminal", "--", "fd://0"]
+        try:
+            mpv_process = subprocess.Popen(
+                mpv_command,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            print("MPV播放器已启动")
+        except Exception as e:
+            print(f"MPV播放器启动失败: {e}")
+            mpv_process = None
+    return mpv_process is not None
 
 
 def trim_leading_silence(audio_data: bytes, silence_threshold=-50, chunk_size=10) -> bytes:
@@ -158,15 +180,47 @@ def call_tts_stream(text: str, language: str = "German", stream: bool = True) ->
                         yield audio
 
 
-def audio_play(audio_stream: Iterator[bytes]) -> bytes:
+def audio_play(audio_stream: Iterator[str]) -> bytes:
+    """将16进制字符串流转换为二进制并播放"""
+    print("开始流式播放...")
     audio = b""
+    buffer = b""  # 预缓冲区
+    buffer_size = 8192  # 预缓冲大小，可调整
+    is_playing = False
+    
+    # 确保MPV进程已经启动
+    ensure_mpv_process()
+    
     for chunk in audio_stream:
         if chunk is not None and chunk != '\n':
-            decoded_hex = bytes.fromhex(chunk)
-            mpv_process.stdin.write(decoded_hex)  # type: ignore
-            mpv_process.stdin.flush()
-            audio += decoded_hex
-
+            try:
+                decoded_hex = bytes.fromhex(chunk)
+                
+                # 预缓冲积累足够数据
+                # if not is_playing:
+                #     buffer += decoded_hex
+                #     if len(buffer) >= buffer_size:
+                #         if mpv_process and mpv_process.poll() is None:
+                #             mpv_process.stdin.write(buffer)
+                #             mpv_process.stdin.flush()
+                #             is_playing = True
+                #         buffer = b""
+                # # 已经开始播放，直接写入
+                # elif mpv_process and mpv_process.poll() is None:
+                #     mpv_process.stdin.write(decoded_hex)
+                #     mpv_process.stdin.flush()
+                
+                print(".", end="", flush=True)
+                audio += decoded_hex
+            except Exception as e:
+                print(f"\n处理音频块时出错: {e}")
+    
+    # 确保缓冲区中剩余数据被播放
+    if buffer and mpv_process and mpv_process.poll() is None:
+        mpv_process.stdin.write(buffer)
+        mpv_process.stdin.flush()
+    
+    print("\n流式播放完成")
     return audio
 
 
@@ -186,12 +240,15 @@ def map_lang_code_to_minimax(lang_code: str) -> str:
 def play_local_file(file_path: str) -> bool:
     """播放本地音频文件"""
     if not os.path.exists(file_path):
+        print(f"文件不存在: {file_path}")
         return False
     
     try:
+        # 使用单独的进程播放文件，不依赖全局mpv进程
         play_command = ["mpv", "--no-terminal", file_path]
-        subprocess.run(play_command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        return True
+        result = subprocess.run(play_command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print(f"播放本地文件完成: {file_path}, 返回码: {result.returncode}")
+        return result.returncode == 0
     except Exception as e:
         print(f"播放本地文件出错: {str(e)}")
         return False
@@ -209,6 +266,7 @@ class TTSRequestHandler(BaseHTTPRequestHandler):
                 
                 # URL解码文本内容
                 text = urllib.parse.unquote(text)
+                print(f"处理请求：语言={lang_code}, 文本={text}")
                 
                 # 将语言代码映射到MiniMax支持的语言
                 language = map_lang_code_to_minimax(lang_code)
@@ -230,43 +288,35 @@ class TTSRequestHandler(BaseHTTPRequestHandler):
                 # 文件路径
                 file_path = os.path.join(cache_dir, f"{text}.mp3")
                 
-                # 音频数据变量
-                audio_data = None
-                
                 # 检查缓存文件是否已存在
                 if os.path.exists(file_path):
+                    print(f"找到缓存文件: {file_path}")
                     # 从缓存文件读取音频数据
                     with open(file_path, 'rb') as file:
                         audio_data = file.read()
+                    
+                    # 在响应前播放本地文件
+                    # success = play_local_file(file_path)
+                    # print(f"播放缓存文件结果: {success}")
+                    
+                    # 直接返回音频数据
+                    self.send_response(200)
+                    self.send_header("Content-type", "audio/mpeg")
+                    self.send_header("Content-length", str(len(audio_data)))
+                    self.end_headers()
+                    self.wfile.write(audio_data)
                 else:
-                    # 生成TTS - 使用流式API
-                    try:
-                        # 修改调用方式，不再播放而是直接获取音频数据
-                        audio_chunk_iterator = call_tts_stream(text, language, stream=True)
-                        audio_data = b""
-                        for chunk in audio_chunk_iterator:
-                            if chunk is not None and chunk != '\n':
-                                decoded_hex = bytes.fromhex(chunk)
-                                audio_data += decoded_hex
-                    except Exception as e:
-                        print(f"流式API调用失败，尝试非流式API: {str(e)}")
-                        # 如果流式调用失败，尝试非流式调用
-                        audio_data = call_tts_stream(text, language, stream=False)
+                    print(f"未找到缓存文件，开始生成: {file_path}")
+                    # 如果没有缓存，返回500错误
+                    self.send_response(500)
+                    self.send_header("Content-type", "text/plain")
+                    self.end_headers()
+                    self.wfile.write(f"没有找到缓存文件: {text}".encode("utf-8"))
                     
-                    # 处理音频（移除开头静音）
-                    audio_data = trim_leading_silence(audio_data)
-                    
-                    # 保存文件
-                    with open(file_path, 'wb') as file:
-                        file.write(audio_data)
-                
-                # 直接返回音频数据
-                self.send_response(200)
-                self.send_header("Content-type", "audio/mpeg")
-                self.send_header("Content-length", str(len(audio_data)))
-                # self.send_header("Content-Disposition", f'attachment; filename="{text}.mp3"')
-                self.end_headers()
-                self.wfile.write(audio_data)
+                    # 在后台异步生成缓存文件(不阻塞响应)
+                    import threading
+                    threading.Thread(target=self.generate_and_cache_audio, 
+                                     args=(text, language, file_path)).start()
             else:
                 self.send_response(400)
                 self.send_header("Content-type", "text/plain")
@@ -277,6 +327,40 @@ class TTSRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-type", "text/plain")
             self.end_headers()
             self.wfile.write(f"服务器错误: {str(e)}".encode("utf-8"))
+    
+    def generate_and_cache_audio(self, text, language, file_path):
+        """后台生成并缓存音频文件"""
+        try:
+            print(f"开始后台生成音频: {text}")
+            # 生成TTS - 使用流式API
+            try:
+                # 获取流式音频数据
+                audio_chunk_iterator = call_tts_stream(text, language, stream=True)
+                
+                # 使用audio_play函数处理流式播放
+                audio_data = audio_play(audio_chunk_iterator)
+                
+            except Exception as e:
+                print(f"流式API调用失败，尝试非流式API: {str(e)}")
+                # 如果流式调用失败，尝试非流式调用
+                audio_data = call_tts_stream(text, language, stream=False)
+                
+                # 非流式方式下也使用mpv播放
+                if mpv_process and mpv_process.poll() is None:
+                    mpv_process.stdin.write(audio_data)
+                    mpv_process.stdin.flush()
+                    print("非流式播放完成")
+            
+            # 处理音频（移除开头静音）
+            audio_data = trim_leading_silence(audio_data)
+            
+            # 保存文件
+            with open(file_path, 'wb') as file:
+                file.write(audio_data)
+                
+            print(f"已生成并缓存音频: {file_path}")
+        except Exception as e:
+            print(f"生成缓存音频时出错: {str(e)}")
 
 
 def run_server(port=3001):
