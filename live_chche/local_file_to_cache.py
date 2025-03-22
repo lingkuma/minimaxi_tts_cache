@@ -49,7 +49,8 @@ def build_tts_stream_body(text: str, language: str = "German", voice_id: str = "
     # 在文本后添加句号以保持陈述语气
     if text and not text.endswith(('.', '!', '?', ';', '。', '！', '？')):
         text = text + "."
-        
+    text = text.replace("ni", "nI")
+    text = text.replace("Gy", "GY")
     body = json.dumps({
         "model": "speech-01-turbo",
         "text": text,
@@ -281,7 +282,7 @@ def process_word_list(word_list_path: str, lang_code: str = "de", thread_count: 
 if __name__ == "__main__":
     # 获取脚本目录下的listtest.txt文件路径
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    word_list_path = os.path.join(script_dir, "listtest.txt")
+    word_list_path = os.path.join(script_dir, "./wort_list/de/die_wand/list.txt")
     
     # 设置线程数 - 可以根据需要调整
     thread_count = 3  # 默认使用3个线程，可以手动修改这个值
