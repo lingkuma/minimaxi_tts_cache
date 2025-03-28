@@ -32,12 +32,14 @@ api_key = os.getenv('api_key')
 if group_id is None or api_key is None:
     raise ValueError("环境变量 'group_id' 或 'api_key' 未设置。请确保.env文件正确配置并已加载。")
 
+
 file_format = 'mp3'  # support mp3/pcm/flac
 
+# 
 url = "https://api.minimaxi.chat/v1/t2a_v2?GroupId=" + group_id
 headers = {"Content-Type": "application/json", "Authorization": "Bearer " + api_key}
 
-
+# 构建TTS请求头
 def build_tts_stream_headers() -> dict:
     headers = {
         'accept': 'application/json, text/plain, */*',
