@@ -45,7 +45,7 @@ def build_tts_stream_headers() -> dict:
 def build_tts_stream_body(text: str) -> dict:
     body = json.dumps({
         "model": "speech-01-turbo",
-        "text": "wie.",
+        "text": "这是非流播放的速度，等全部文本加载完成会很慢很慢很慢的哦.",
         "stream": True,
         "language_boost": "German",
         "voice_setting": {
