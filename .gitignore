@@ -1,5 +1,4 @@
 .env
 *.log
 .qodo
-live_chche/hailuo_ws_server.py
-live_chche/local_live_cache_wscn.py
+
