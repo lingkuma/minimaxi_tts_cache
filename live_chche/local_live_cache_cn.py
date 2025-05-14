@@ -88,7 +88,7 @@ def build_tts_stream_body(text: str, language: str = "German", voice_id: str = "
     print(text)
 
     body = json.dumps({
-        "model": "speech-02-turbo",
+        "model": "speech-02-hd",
         "text": text,
         "stream": True,
         "language_boost": language,

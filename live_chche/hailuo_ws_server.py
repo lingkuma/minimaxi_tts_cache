@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-
+不能用了
 """
 
 import json
@@ -62,7 +62,7 @@ class HailuoWSTest:
 
     def build_ws_url(self):
         """构建WebSocket URL"""
-        base_url = "wss://hailuoai.com/v1/audio/ws"
+        base_url = "wss://minimaxi.com/v1/audio/ws"
 
         # 使用固定的时间戳和uuid，与curl命令保持一致
         timestamp = 1746638222913  # 从curl命令中提取的时间戳
@@ -408,7 +408,7 @@ class HailuoWSTest:
         # WebSocket连接头 - 避免重复的头信息
         headers = {
             # 不设置Upgrade和Connection，让websocket-client库自己处理
-            "Origin": "https://hailuoai.com",
+            "Origin": "https://minimaxi.com",
             "Cache-Control": "no-cache",
             "Accept-Language": "de-DE,de;q=0.9,zh-CN;q=0.8,zh;q=0.7,en-US;q=0.6,en;q=0.5,zh-TW;q=0.4,fr;q=0.3",
             "Pragma": "no-cache",
