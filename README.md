@@ -84,3 +84,36 @@ python generate_ssl_cert.py --cn your-ip-or-domain
 ```bash
 python test_https_server.py --url https://localhost:3001 --text "测试" --lang zh
 ```
+
+## HTTPS代理服务器
+
+系统还提供了一个HTTPS代理服务器，可以将HTTPS请求转发到HTTP服务。
+
+### 启动代理服务器
+
+```bash
+python https_proxy_server.py
+```
+
+默认情况下，代理服务器在端口3003上运行，将请求从：
+```
+https://192.168.0.253:3003/api/tts?text=你的文本
+```
+转发到：
+```
+http://192.168.0.253:2333/api/tts?text=你的文本
+```
+
+### 测试代理服务器
+
+```bash
+python test_proxy_server.py --url https://localhost:3003 --text "测试"
+```
+
+### 同时启动所有服务
+
+可以使用提供的脚本同时启动TTS缓存服务器和代理服务器：
+
+```bash
+python start_all_services.py
+```
