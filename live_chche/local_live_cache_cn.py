@@ -1,5 +1,8 @@
 # This Python file uses the following encoding: utf-8
 
+# python live_chche/local_live_cache_cn.py --https --force-new-cert
+# python live_chche/local_live_cache_cn.py --https 
+
 import json
 import os
 import subprocess
@@ -13,6 +16,9 @@ import re
 from pydub import AudioSegment
 from pydub.silence import detect_leading_silence
 import io
+import ssl
+import argparse
+from http.server import HTTPServer
 
 #https://www.minimax.io/platform/document/T2A%20V2
 #http://localhost:3001/langid={lang}&txt={word}
@@ -391,13 +397,142 @@ class TTSRequestHandler(BaseHTTPRequestHandler):
             print(f"生成缓存音频时出错: {str(e)}")
 
 
-def run_server(port=3001):
+def generate_self_signed_cert(cert_file="server.crt", key_file="server.key", force_new=False):
+    """生成自签名SSL证书"""
+    from OpenSSL import crypto
+    import socket
+
+    # 检查证书文件是否已存在
+    if os.path.exists(cert_file) and os.path.exists(key_file) and not force_new:
+        print(f"证书文件已存在: {cert_file}, {key_file}")
+        print("如需重新生成证书，请删除现有证书文件或使用--force-new-cert参数")
+        return cert_file, key_file
+
+    print("生成自签名SSL证书...")
+
+    # 获取本机IP地址
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+
+    # 创建密钥对
+    k = crypto.PKey()
+    k.generate_key(crypto.TYPE_RSA, 2048)
+
+    # 创建自签名证书
+    cert = crypto.X509()
+    cert.get_subject().C = "CN"
+    cert.get_subject().ST = "State"
+    cert.get_subject().L = "City"
+    cert.get_subject().O = "Organization"
+    cert.get_subject().OU = "Organizational Unit"
+
+    # 使用IP地址作为Common Name
+    cert.get_subject().CN = local_ip
+    print(f"使用IP地址作为证书CN: {local_ip}")
+
+    cert.set_serial_number(1000)
+    cert.gmtime_adj_notBefore(0)
+    cert.gmtime_adj_notAfter(10*365*24*60*60)  # 10年有效期
+    cert.set_issuer(cert.get_subject())
+    cert.set_pubkey(k)
+
+    # 添加subjectAltName扩展，包含localhost和IP地址
+    alt_names = [
+        f"DNS:localhost",
+        f"DNS:{hostname}",
+        f"IP:127.0.0.1",
+        f"IP:{local_ip}"
+    ]
+
+    # 尝试添加192.168.0.253
+    if local_ip != "192.168.0.253":
+        alt_names.append("IP:192.168.0.253")
+
+    san_extension = crypto.X509Extension(
+        b"subjectAltName",
+        False,
+        ", ".join(alt_names).encode()
+    )
+    cert.add_extensions([san_extension])
+
+    cert.sign(k, 'sha256')
+
+    # 保存证书和私钥
+    with open(cert_file, "wb") as f:
+        f.write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
+
+    with open(key_file, "wb") as f:
+        f.write(crypto.dump_privatekey(crypto.FILETYPE_PEM, k))
+
+    print(f"已生成自签名SSL证书: {cert_file}")
+    print(f"已添加以下备用名称: {', '.join(alt_names)}")
+    return cert_file, key_file
+
+
+class HTTPSServer(HTTPServer):
+    """支持HTTPS的HTTP服务器"""
+    def __init__(self, server_address, RequestHandlerClass, certfile, keyfile, ssl_version=ssl.PROTOCOL_TLS_SERVER):
+        HTTPServer.__init__(self, server_address, RequestHandlerClass)
+
+        # 创建SSL上下文
+        self.ssl_context = ssl.SSLContext(ssl_version)
+        self.ssl_context.load_cert_chain(certfile=certfile, keyfile=keyfile)
+
+        # 包装socket
+        self.socket = self.ssl_context.wrap_socket(self.socket, server_side=True)
+
+
+def run_server(port=3001, use_https=False, cert_file=None, key_file=None, force_new_cert=False):
+    """运行HTTP/HTTPS服务器"""
     server_address = ('', port)
-    httpd = HTTPServer(server_address, TTSRequestHandler)
-    print(f"启动TTS缓存服务器，监听端口 {port}...")
+
+    if use_https:
+        # 如果没有提供证书文件，生成自签名证书
+        if not cert_file or not key_file:
+            cert_file, key_file = generate_self_signed_cert(force_new=force_new_cert)
+
+        # 创建HTTPS服务器
+        httpd = HTTPSServer(server_address, TTSRequestHandler, cert_file, key_file)
+        protocol = "HTTPS"
+
+        # 打印访问信息
+        import socket
+        hostname = socket.gethostname()
+        local_ip = socket.gethostbyname(hostname)
+        print(f"HTTPS服务器已启动，可通过以下地址访问:")
+        print(f"https://localhost:{port}")
+        print(f"https://127.0.0.1:{port}")
+        print(f"https://{hostname}:{port}")
+        print(f"https://{local_ip}:{port}")
+        if local_ip != "192.168.0.253":
+            print(f"https://192.168.0.253:{port} (如果此IP可用)")
+    else:
+        # 创建普通HTTP服务器
+        httpd = HTTPServer(server_address, TTSRequestHandler)
+        protocol = "HTTP"
+        print(f"HTTP服务器已启动，可通过 http://localhost:{port} 访问")
+
+    print(f"启动TTS缓存服务器 ({protocol})，监听端口 {port}...")
     httpd.serve_forever()
 
 
 # 启动服务器（替换原来的直接TTS调用）
 if __name__ == "__main__":
-    run_server()
+    # 解析命令行参数
+    parser = argparse.ArgumentParser(description="TTS缓存服务器")
+    parser.add_argument("--port", type=int, default=3001, help="服务器端口，默认3001")
+    parser.add_argument("--https", action="store_true", help="启用HTTPS")
+    parser.add_argument("--cert", type=str, help="SSL证书文件路径")
+    parser.add_argument("--key", type=str, help="SSL私钥文件路径")
+    parser.add_argument("--force-new-cert", action="store_true", help="强制重新生成SSL证书")
+
+    args = parser.parse_args()
+
+    # 启动服务器
+    run_server(
+        port=args.port,
+        use_https=args.https,
+        cert_file=args.cert,
+        key_file=args.key,
+        force_new_cert=args.force_new_cert
+    )

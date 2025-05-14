@@ -18,7 +18,8 @@ german word audio cache, currently has 23,000 word audio cache, will gradually i
 - 使用Minimaxi API进行TTS转换
 - 本地缓存音频文件，避免重复请求
 - 支持多线程并发下载
-- 提供本地HTTP服务用于音频访问
+- 提供本地HTTP/HTTPS服务用于音频访问
+- 支持SSL加密连接
 
 ## 使用方法
 
@@ -37,12 +38,20 @@ german word audio cache, currently has 23,000 word audio cache, will gradually i
 
 4. 启动本地服务
    ```bash
-   python local_live_cache.py
+   # HTTP服务
+   python live_chche/local_live_cache_cn.py
+
+   # 或启动HTTPS服务
+   python live_chche/local_live_cache_cn.py --https
    ```
 
 5. 访问音频
    ```
+   # HTTP访问
    http://localhost:3001/langid=de&txt=你的单词
+
+   # HTTPS访问
+   https://localhost:3001/langid=de&txt=你的单词
    ```
 
 ## 注意事项
@@ -51,3 +60,27 @@ german word audio cache, currently has 23,000 word audio cache, will gradually i
 - 建议使用3-5个线程进行下载
 - 音频文件默认保存在 cache 目录
 - 支持的语言参考 Minimaxi API 文档
+
+## HTTPS支持
+
+使用HTTPS需要安装额外的依赖：
+
+```bash
+pip install pyOpenSSL
+```
+
+详细的HTTPS配置说明请参考 [README_HTTPS.md](README_HTTPS.md)
+
+### 生成自定义证书
+
+可以使用提供的脚本生成自定义证书：
+
+```bash
+python generate_ssl_cert.py --cn your-ip-or-domain
+```
+
+### 测试HTTPS服务器
+
+```bash
+python test_https_server.py --url https://localhost:3001 --text "测试" --lang zh
+```
