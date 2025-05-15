@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 
 # python live_chche/local_live_cache_cn.py --https --force-new-cert
-# python live_chche/local_live_cache_cn.py --https 
+# python live_chche/local_live_cache_cn.py --https
 
 import json
 import os
@@ -398,21 +398,17 @@ class TTSRequestHandler(BaseHTTPRequestHandler):
 
 
 def generate_self_signed_cert(cert_file="server.crt", key_file="server.key", force_new=False):
-    """生成自签名SSL证书"""
+    """生成自签名SSL证书 - 更适合iOS设备的版本"""
     from OpenSSL import crypto
     import socket
 
     # 检查证书文件是否已存在
     if os.path.exists(cert_file) and os.path.exists(key_file) and not force_new:
         print(f"证书文件已存在: {cert_file}, {key_file}")
-        print("如需重新生成证书，请删除现有证书文件或使用--force-new-cert参数")
+        print("如需重新生成证书，请使用--force-new-cert参数")
         return cert_file, key_file
 
-    print("生成自签名SSL证书...")
-
-    # 获取本机IP地址
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
+    print("生成iOS兼容的自签名SSL证书...")
 
     # 创建密钥对
     k = crypto.PKey()
@@ -423,49 +419,59 @@ def generate_self_signed_cert(cert_file="server.crt", key_file="server.key", for
     cert.get_subject().C = "CN"
     cert.get_subject().ST = "State"
     cert.get_subject().L = "City"
-    cert.get_subject().O = "Organization"
-    cert.get_subject().OU = "Organizational Unit"
-
-    # 使用IP地址作为Common Name
-    cert.get_subject().CN = local_ip
-    print(f"使用IP地址作为证书CN: {local_ip}")
-
+    cert.get_subject().O = "MyOrganization"  # 使用更标准的组织名称
+    cert.get_subject().OU = "MyUnit"
+    
+    # 获取本机IP地址
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+    
+    # 使用更友好的Common Name
+    cert.get_subject().CN = "MyLocalServer"  # 使用更友好的名称而非IP
+    
     cert.set_serial_number(1000)
     cert.gmtime_adj_notBefore(0)
     cert.gmtime_adj_notAfter(10*365*24*60*60)  # 10年有效期
-    cert.set_issuer(cert.get_subject())
+    cert.set_issuer(cert.get_subject())  # 自签名
     cert.set_pubkey(k)
-
-    # 添加subjectAltName扩展，包含localhost和IP地址
+    
+    # 添加基本约束扩展，标记为CA证书
+    cert.add_extensions([
+        crypto.X509Extension(b"basicConstraints", True, b"CA:TRUE, pathlen:0"),
+        crypto.X509Extension(b"keyUsage", True, b"keyCertSign, cRLSign"),
+        crypto.X509Extension(b"subjectKeyIdentifier", False, b"hash", subject=cert),
+    ])
+    
+    # 添加subjectAltName扩展
     alt_names = [
         f"DNS:localhost",
         f"DNS:{hostname}",
         f"IP:127.0.0.1",
         f"IP:{local_ip}"
     ]
-
-    # 尝试添加192.168.0.253
+    
+    # 添加其他IP地址
     if local_ip != "192.168.0.253":
         alt_names.append("IP:192.168.0.253")
-
+    
     san_extension = crypto.X509Extension(
         b"subjectAltName",
         False,
         ", ".join(alt_names).encode()
     )
     cert.add_extensions([san_extension])
-
+    
+    # 签名
     cert.sign(k, 'sha256')
-
+    
     # 保存证书和私钥
     with open(cert_file, "wb") as f:
         f.write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
-
+    
     with open(key_file, "wb") as f:
         f.write(crypto.dump_privatekey(crypto.FILETYPE_PEM, k))
-
-    print(f"已生成自签名SSL证书: {cert_file}")
-    print(f"已添加以下备用名称: {', '.join(alt_names)}")
+    
+    print(f"已生成iOS兼容的自签名SSL证书: {cert_file}")
     return cert_file, key_file
 
 
